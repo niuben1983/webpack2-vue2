@@ -1,13 +1,13 @@
 <template>
-   <div v-show="isShow" class="share" @click="hideShare"></div>
+   <div v-show="foo" class="share" @click="hideShare"></div>
 </template>
 
 <script>
 export default {
-  props: ["isShow"],
+  props: ["foo"],
   methods: {
     hideShare() {
-      this.$emit("hide");
+      this.$emit("update:foo", false);
     }
   }
 };

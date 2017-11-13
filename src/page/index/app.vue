@@ -12,7 +12,7 @@
     
     <end :is-show="showEnd" @replay="replay" @show-share="showShare"></end>
 
-    <share :is-show="flagShare" @hide="hideShare"></share>
+    <share :foo.sync="flagShare"></share>
     
   </div>
 </template>
