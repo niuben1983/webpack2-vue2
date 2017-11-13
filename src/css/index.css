@@ -41,7 +41,21 @@ html, body {
 .axios-test{
     background: #ccc;
 }
-.axios-test ul li{
+.axios-test ul.axios_tab{
+    display: table;
+    width: 100%;
+    border-bottom: 1px solid #000; /*no*/
+}
+.axios-test ul.axios_tab li{
+    display: table-cell;
+    text-align: center;
+    font-size: 24px; /*px*/
+    padding: 20px 0; /*px*/
+}
+.axios-test ul.axios_tab li.active{
+    background: blue;
+}
+.axios-test ul.axios_content li{
     font-size: 24px; /*px*/
     padding: 20px; /*px*/
     border-bottom: 1px solid #000; /*no*/
