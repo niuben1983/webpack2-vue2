@@ -10,8 +10,6 @@
 
 <script>
 import Vue from "vue";
-import Promise from 'promise-polyfill';
-window.Promise = Promise;
 import axios from "axios";
 import '../../css/base.css';
 import '../../css/index.css';
@@ -29,7 +27,6 @@ export default {
       axios
         .get(api)
         .then(response => {
-          console.log(response);
           if (response.status != 200) return;
           response.data.code == 10000 &&
             (this.list = response.data.data.newsList);
