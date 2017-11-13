@@ -1,0 +1,39 @@
+html, body {
+    height: 100%;
+}
+.index{
+    height: 100%;
+    background: #030b18 url('../img/bg.jpg') no-repeat center top;
+    background-size: 100% auto;
+}
+.in_title{
+    margin: 0 auto;
+    padding-top: 190px /*px*/;
+    width: 583px /*px*/;
+    height: 46px /*px*/;
+    background: url(../img/t.png) no-repeat center bottom;
+    background-size: 100% auto;
+}
+.in_des{
+    margin: 30px auto 0; /*px*/
+    width: 500px; /*px*/
+    height: 91px; /*px*/
+    background: url(../img/t2.png) no-repeat center bottom;
+    background-size: contain;
+}
+.in_link{
+    position: fixed;
+    bottom: 145px; /*px*/
+    left: 50%;
+    width: 320px; /*px*/
+    height: 140px; /*px*/
+    background: url(../img/btn.png) no-repeat;
+    background-size: contain;
+    transform: translateX(-50%);
+}
+#video{
+    position: absolute;
+    top:0;
+    left: 0;
+    object-fit:contain;
+}
