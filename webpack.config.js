@@ -147,7 +147,7 @@ if (ENV === 'production') {
         // 借鉴 vue 官方的生成环境配置
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: 'production'
+                NODE_ENV: '"production"'
             },
             'CONFIG': JSON.stringify(CONFIG_PROD)
         }),
@@ -163,7 +163,7 @@ if (ENV === 'production') {
         // 借鉴 vue 官方的生成环境配置
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: 'prerelease'
+                NODE_ENV: '"prerelease"'
             },
             'CONFIG': JSON.stringify(CONFIG_PRE)
         }),
@@ -176,10 +176,19 @@ if (ENV === 'production') {
     // dev环境
     module.exports.devtool = 'eval-source-map';
     module.exports.plugins = module.exports.plugins.concat([
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, 'src/api'),
+                to: path.resolve(__dirname, config.path + '/api'),
+                force: true,
+                toType: 'dir',
+                ignore: ['.*']
+            }
+        ]),
         // 借鉴 vue 官方的生成环境配置
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: 'development'
+                NODE_ENV: '"development"'
             },
             'CONFIG': JSON.stringify(CONFIG_DEV)
         }),
