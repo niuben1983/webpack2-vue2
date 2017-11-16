@@ -60,3 +60,15 @@ html, body {
     padding: 20px; /*px*/
     border-bottom: 1px solid #000; /*no*/
 }
+
+.share_test{
+    height: 100%;
+    background: #000;
+    text-align: center;
+}
+.share_test .btn{
+    margin: 100px auto; /*px*/
+    width: 300px;/*px*/
+    line-height: 60px;/*px*/
+    background: #f0f0f0;
+}
