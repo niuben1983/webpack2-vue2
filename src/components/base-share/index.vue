@@ -22,19 +22,21 @@
         <button type="button" class="zsh_cancel" @click.stop="close">取消</button>
     </div>
     <!-- 微信提示层 -->
-    <div class="wx_fixed_tip wx_share_tip" v-if="hasShare" v-show="sWeiXinTips">
-        <p>1、在Safari浏览器中点击“<img src="./img/share_img1.jpg" class="share_img1">”</p>
-        <p>2、在弹出的浮层中点击更多“<img src="./img/share_img2.jpg" class="share_img2">”</p>
-        <p>3、微信设置为“<img src="./img/share_img3.jpg" class="share_img3">”状态</p>
-        <p>4、完成以上操作即可查看“微信”图标</p>
-        <p>
-            <img src="./img/share_img4.jpg" class="share_img4">
-            <img src="./img/share_img4.jpg" class="share_img4">
-            <img src="./img/share_img5.jpg" class="share_img5" >
-            <img src="./img/share_img2.jpg" class="share_img2">
-            点击完成分享
-        </p>
-    </div>
+    <transition name="tips">
+        <div class="wx_fixed_tip wx_share_tip" v-if="hasShare" v-show="sWeiXinTips">
+            <p>1、在Safari浏览器中点击“<img src="./img/share_img1.jpg" class="share_img1">”</p>
+            <p>2、在弹出的浮层中点击更多“<img src="./img/share_img2.jpg" class="share_img2">”</p>
+            <p>3、微信设置为“<img src="./img/share_img3.jpg" class="share_img3">”状态</p>
+            <p>4、完成以上操作即可查看“微信”图标</p>
+            <p>
+                <img src="./img/share_img4.jpg" class="share_img4">
+                <img src="./img/share_img4.jpg" class="share_img4">
+                <img src="./img/share_img5.jpg" class="share_img5" >
+                <img src="./img/share_img2.jpg" class="share_img2">
+                点击完成分享
+            </p>
+        </div>
+    </transition>
     <!-- 分享提示 -->
     <div class="tips share_tip" v-if="hasWeixin">
         <p>点击 ••• 即可将内容“发送给朋友”或“分享到朋友圈”</p>
@@ -53,7 +55,7 @@ export default {
     title: {
       type: String,
       default: () => {
-        return document.title+'1111';
+        return document.title + "1111";
       }
     },
     desc: {

@@ -44,12 +44,13 @@
   z-index: 100;
 }
 .zsh_shareLayer ul {
+    display: inline-table;
+    width: 100%;
   padding-top: .64rem;
   text-align: center;
 }
 .zsh_shareLayer ul li {
-  display: inline-block;
-  width: 1.72rem;
+  display: table-cell;
   height: 1.72rem;
   text-align: center;
 }
@@ -107,13 +108,13 @@
   font-size: 11px;
 }
 .zsh_shareLayer .zsh_cancel {
-  margin: .627rem 0 0 4%;
-  width: 92%;
+    width: 700px;
+    margin: .627rem auto 0;
   height: .96rem;
   text-align: center;
   line-height: .96rem;
   background: #edf7ff;
-  font-size: 13px;
+  font-size: 28px; /*px*/
   color: #52adfe;
   border: none;
   outline: none;
@@ -140,6 +141,7 @@
   bottom: 3.947rem;
   left: 4%;
   z-index: 99999;
+  transform: translateY(-50%);
 }
 .wx_share_tip .zsh_sf_arrowDown {
   position: absolute;
@@ -191,8 +193,13 @@
   height: 0.587rem;
 }
 .wx_fixed_tip {
-  bottom: 50%;
+  top: 50%;
   left: 4%;
 }
-.share_tip{
+
+.tips-enter-active, .tips-leave-active {
+    transition: opacity 0.5s
+  }
+.tips-enter, .tips-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    opacity: 0
 }
