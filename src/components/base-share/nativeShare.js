@@ -6,17 +6,18 @@ let bLevel = {
     qq: { forbid: 0, lower: 1, higher: 2 },
     uc: { forbid: 0, allow: 1 }
 };
-let UA = navigator.appVersion;
-let isqqBrowser = (UA.split("MQQBrowser/").length > 1) ? bLevel.qq.higher : bLevel.qq.forbid;
-let isucBrowser = (UA.split("UCBrowser/").length > 1) ? bLevel.uc.allow : bLevel.uc.forbid;
+let UA = navigator.appVersion.toLowerCase();
+let isqqBrowser = (UA.split("mqqbrowser/").length > 1) ? bLevel.qq.higher : bLevel.qq.forbid;
+let isucBrowser = (UA.split("ucbrowser/").length > 1) ? bLevel.uc.allow : bLevel.uc.forbid;
+let isSafari = UA.indexOf("safari") > 0 && UA.indexOf("chrome") < 0;
 let version = {
     uc: "",
     qq: ""
 };
 let isWeixin = false;
 
-let url =document.location.href || '';
-let title =document.title || '';
+let url = document.location.href || '';
+let title = document.title || '';
 let desc = document.title || '';
 let img = document.getElementsByTagName('img').length > 0 && document.getElementsByTagName('img')[0].src || '';
 let img_title = document.title || '';
@@ -30,7 +31,7 @@ let ucAppList = {
     QZone: ['kQZone', 'QZone', '3', 'QQ空间']
 };
 
-function isloadqqApi () {
+function isloadqqApi() {
     if (isqqBrowser) {
         let b = (version.qq < 5.4) ? qApiSrc.lower : qApiSrc.higher;
         let d = document.createElement("script");
@@ -40,7 +41,7 @@ function isloadqqApi () {
     }
 };
 
-function is_weixin () {
+function is_weixin() {
     let a = UA.toLowerCase();
     if (a.match(/MicroMessenger/i) == "micromessenger") {
         return true
@@ -49,12 +50,12 @@ function is_weixin () {
     }
 };
 
-function getVersion (c) {
+function getVersion(c) {
     let a = c.split("."), b = parseFloat(a[0] + "." + a[1]);
     return b
 };
 
-function init () {
+function init() {
     isloadqqApi();
     let platform_os = getPlantform();
     version.qq = isqqBrowser ? getVersion(UA.split("MQQBrowser/")[1]) : 0;
@@ -134,13 +135,6 @@ function share(to_app) {
     }
 };
 
-function toWinxin() {
-
-    share('weixin');
-
-}
-
 init();
 export {
-    toWinxin
 };
