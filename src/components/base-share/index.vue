@@ -19,7 +19,7 @@
                 <a href="javascript:void(0);"><span class="zsh_kj"></span><span>QQ空间</span></a>
             </li>
         </ul>
-        <button type="button" class="zsh_cancel">取消</button>
+        <button type="button" class="zsh_cancel" @click.stop="close">取消</button>
     </div>
     <!-- 微信提示层 -->
     <div class="wx_fixed_tip wx_share_tip" v-if="hasShare" v-show="sWeiXinTips">
@@ -48,7 +48,45 @@ import { BaseWxSahre, wxConfig, wxShare } from "../../lib/wx";
 import "./css.css";
 
 export default {
-  props: ["foo"],
+  props: {
+    foo: Boolean,
+    title: {
+      type: String,
+      default: () => {
+        return document.title+'1111';
+      }
+    },
+    desc: {
+      type: String,
+      default: () => {
+        return document.title;
+      }
+    },
+    link: {
+      type: String,
+      default: () => {
+        return location.href;
+      }
+    },
+    imgUrl: {
+      type: String,
+      default: () => {
+        return "http://jsx.qichedaquan.com/h5/img/logo2.png";
+      }
+    },
+    imgTitle: {
+      type: String,
+      default: () => {
+        return location.href;
+      }
+    },
+    from: {
+      type: String,
+      default: () => {
+        return "汽车大全";
+      }
+    }
+  },
   data() {
     return {
       btn_pyq: true,
@@ -58,14 +96,6 @@ export default {
       sWeiXinTips: false,
       hasShare: false,
       sShare: false,
-      share_info: {
-        title: document.title,
-        desc: document.title,
-        link: window.location.href,
-        imgUrl: "http://jsx.qichedaquan.com/h5/img/logo2.png",
-        img_title: document.title,
-        form: ""
-      },
       isWeixin: false,
       isSafari: false,
       isqqBrowser: 0,
@@ -102,12 +132,12 @@ export default {
         this.share("sinaWeibo");
         return;
       }
-      let img = this.share_info.imgUrl || "";
-      let title = this.share_info.title + "@行圆汽车大全";
+      let img = this.imgUrl || "";
+      let title = this.title + "@" + this.from;
       var urlx = `http://v.t.sina.com.cn/share/share.php?c=&url=${encodeURIComponent(
-        this.share_info.link
+        this.link
       )}&pic=${img}&type=1&title=${encodeURI(title)}&content=${encodeURI(
-        this.share_info.desc
+        this.desc
       )}&rnd=${new Date().valueOf()}`;
       window.open(urlx);
     },
@@ -117,10 +147,8 @@ export default {
         return;
       }
       var urlx = `http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title=${encodeURI(
-        this.share_info.title
-      )}&url=${encodeURIComponent(this.share_info.link)}&desc=${encodeURI(
-        this.share_info.desc
-      )}`;
+        this.title
+      )}&url=${encodeURIComponent(this.link)}&desc=${encodeURI(this.desc)}`;
       window.open(urlx);
     },
     shareToWeiXin() {
@@ -201,7 +229,6 @@ export default {
     },
     share(to_app) {
       let platform_os = this.getPlantform();
-      this.from = "汽车大全";
       if (this.isucBrowser) {
         to_app =
           to_app == ""
@@ -210,23 +237,12 @@ export default {
               ? this.ucAppList[to_app][0]
               : this.ucAppList[to_app][1];
         if (to_app == "QZone") {
-          B =
-            "mqqapi://share/to_qzone?src_type=web&version=1&file_type=news&req_type=1&image_url=" +
-            this.img +
-            "&title=" +
-            this.title +
-            "&description=" +
-            this.desc +
-            "&url=" +
-            this.link +
-            "&app_name=" +
-            this.from;
+          B = `mqqapi://share/to_qzone?src_type=web&version=1&file_type=news&req_type=1&image_url=${this
+            .imgUrl}&title=${this.title}&description=${this.desc}&url=${this
+            .link}&app_name=${this.from}`;
           (k = document.createElement("div")),
             (k.style.visibility = "hidden"),
-            (k.innerHTML =
-              '<iframe src="' +
-              B +
-              '" scrolling="no" width="1" height="1"></iframe>'),
+            (k.innerHTML = `<iframe src="${B}" scrolling="no" width="1" height="1"></iframe>`),
             document.body.appendChild(k),
             setTimeout(function() {
               k && k.parentNode && k.parentNode.removeChild(k);
@@ -234,28 +250,30 @@ export default {
         }
 
         if (typeof ucweb != "undefined") {
+          let _self = this;
           window.setTimeout(function() {
             ucweb.startRequest("shell.page_share", [
-              this.title,
-              this.desc,
-              this.link,
+              _self.title,
+              _self.desc,
+              _self.link,
               to_app,
               "",
-              "@" + this.from,
+              "@" + _self.from,
               ""
             ]);
           }, 200);
           //ucweb.startRequest("shell.page_share", [title, img, url, to_app, "", from, ""])
         } else {
           if (typeof ucbrowser != "undefined") {
+            let _self = this;
             window.setTimeout(function() {
               ucbrowser.web_share(
-                this.title,
-                this.desc,
-                this.link,
+                _self.title,
+                _self.desc,
+                _self.link,
                 to_app,
                 "",
-                "@" + this.from,
+                "@" + _self.from,
                 ""
               );
             }, 200);
@@ -271,15 +289,13 @@ export default {
             title: this.title,
             description: this.desc,
             img_url: this.imgUrl,
-            img_title: this.img_title,
+            img_title: this.imgTitle,
             to_app: to_app, //微信好友1,腾讯微博2,QQ空间3,QQ好友4,生成二维码7,微信朋友圈8,啾啾分享9,复制网址10,分享到微博11,创意分享13
             cus_txt: "请输入此时此刻想要分享的内容"
           };
           ah = to_app == "" ? "" : ah;
-              
+
           if (typeof window.browser != "undefined") {
-              
-              alert(this.isqqBrowser+ '------'+this.bLevel.qq.higher);
             if (
               typeof window.browser.app != "undefined" &&
               this.isqqBrowser == this.bLevel.qq.higher
@@ -315,8 +331,14 @@ export default {
     let ua = navigator.userAgent.toLowerCase();
     this.isWeixin = ua.indexOf("micromessenger") != -1;
     this.isSafari = ua.indexOf("safari") > 0 && ua.indexOf("chrome") < 0;
-    this.isqqBrowser = (ua.split("mqqbrowser/").length > 1) ? this.bLevel.qq.higher : this.bLevel.qq.forbid;;
-    this.isucBrowser = (ua.split("ucbrowser/").length > 1) ? this.bLevel.uc.allow : this.bLevel.uc.forbid;
+    this.isqqBrowser =
+      ua.split("mqqbrowser/").length > 1
+        ? this.bLevel.qq.higher
+        : this.bLevel.qq.forbid;
+    this.isucBrowser =
+      ua.split("ucbrowser/").length > 1
+        ? this.bLevel.uc.allow
+        : this.bLevel.uc.forbid;
 
     if (this.isqqBrowser || this.isucBrowser) {
       this.btn_qq = true;
@@ -327,11 +349,9 @@ export default {
         this.btn_wx = false;
       }
     }
-    
+
     this.viewInit();
   },
-  mounted() {
-    BaseWxSahre(this.share_info);
-  }
+  mounted() {}
 };
 </script>
